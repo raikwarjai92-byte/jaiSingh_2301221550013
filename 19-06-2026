@@ -1,0 +1,139 @@
+void sortColors(int* nums, int numsSize) {
+    int low = 0, mid = 0;
+    int high = numsSize - 1;
+
+    while (mid <= high) {
+        if (nums[mid] == 0) {
+            int temp = nums[low];
+            nums[low] = nums[mid];
+            nums[mid] = temp;
+
+            low++;
+            mid++;
+        }
+        else if (nums[mid] == 1) {
+            mid++;
+        }
+        else { // nums[mid] == 2
+            int temp = nums[mid];
+            nums[mid] = nums[high];
+            nums[high] = temp;
+
+            high--;
+        }
+    }
+}
+---------------------------------------------------------------------------------------------------------------------
+#include <stdio.h>
+
+int main() {
+    int arr[] = {10, 25, 30, 45, 50};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int key, found = 0;
+
+    printf("Enter element to search: ");
+    scanf("%d", &key);
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == key) {
+            printf("Element found at index %d\n", i);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("Element not found\n");
+    }
+
+    return 0;
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+#include <stdio.h>
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50, 60, 70};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int key;
+    printf("Enter element to search: ");
+    scanf("%d", &key);
+
+    int low = 0;
+    int high = n - 1;
+    int found = 0;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+
+        if (arr[mid] == key) {
+            printf("Element found at index %d\n", mid);
+            found = 1;
+            break;
+        }
+        else if (key < arr[mid]) {
+            high = mid - 1;
+        }
+        else {
+            low = mid + 1;
+        }
+    }
+
+    if (found == 0) {
+        printf("Element not found\n");
+    }
+
+    return 0;
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+int searchInsert(int* nums, int numsSize, int target) {
+    int left = 0, right = numsSize - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (nums[mid] == target)
+            return mid;
+        else if (nums[mid] < target)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+
+    return left;
+}  
+----------------------------------------------------------------------------------------------------------------
+int missingNumber(int* nums, int numsSize) {
+    int expectedSum = numsSize * (numsSize + 1) / 2;
+    int actualSum = 0;
+
+    for (int i = 0; i < numsSize; i++) {
+        actualSum += nums[i];
+    }
+
+    return expectedSum - actualSum;
+}
+--------------------------------------------------------------------------------------------------------------------
+void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
+     int i = m - 1;      // last valid element in nums1
+    int j = n - 1;      // last element in nums2
+    int k = m + n - 1;  // last position in nums1
+
+    while (i >= 0 && j >= 0) {
+        if (nums1[i] > nums2[j]) {
+            nums1[k] = nums1[i];
+            i--;
+        } else {
+            nums1[k] = nums2[j];
+            j--;
+        }
+        k--;
+    }
+
+    // Copy remaining elements of nums2
+    while (j >= 0) {
+        nums1[k] = nums2[j];
+        j--;
+        k--;
+    }
+}
