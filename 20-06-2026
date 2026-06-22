@@ -1,0 +1,69 @@
+int fib(int n)
+{
+    if (n == 0)
+        return 0;
+    if (n == 1)
+        return 1;
+
+    return fib(n - 1) + fib(n - 2);
+}
+
+----------------------------------------------------------------------------------------------
+int climbStairs(int n) {
+    if (n == 1)
+        return 1;
+    if (n == 2)
+        return 2;
+
+    int a = 1, b = 2, c;
+
+    for (int i = 3; i <= n; i++) {
+        c = a + b;
+        a = b;
+        b = c;
+    }
+
+    return b;
+}
+
+-----------------------------------------------------------------------------------------------
+int **ans, *col, path[40], sz;
+
+void dfs(int* a, int n, int t, int idx, int len)
+{
+    if(t == 0)
+    {
+        ans[sz] = malloc(len * sizeof(int));
+        for(int i = 0; i < len; i++)
+            ans[sz][i] = path[i];
+        col[sz++] = len;
+        return;
+    }
+
+    for(int i = idx; i < n; i++)
+    {
+        if(a[i] <= t)
+        {
+            path[len] = a[i];
+            dfs(a, n, t - a[i], i, len + 1);
+        }
+    }
+}
+
+int** combinationSum(int* candidates, int candidatesSize,
+                     int target, int* returnSize,
+                      int** returnColumnSizes)
+{
+    ans = malloc(150 * sizeof(int*));
+    col = malloc(150 * sizeof(int));
+    sz = 0;
+
+    dfs(candidates, candidatesSize, target, 0, 0);
+
+    *returnSize = sz;
+    *returnColumnSizes = col;
+
+    return ans;
+}
+
+----------------------------------------------------------------------------------------
