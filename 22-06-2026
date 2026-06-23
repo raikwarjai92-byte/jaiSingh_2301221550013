@@ -1,28 +1,114 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     struct TreeNode *left;
- *     struct TreeNode *right;
- * };
- */
+1. Binary Tree Preorder Traversal(LeetCode 144)...
 
-void inorder(struct TreeNode* root, int* result, int* size) {
-    if (root == NULL)
-        return;
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        preorder(root, result);
 
-    inorder(root->left, result, size);
-    result[(*size)++] = root->val;
-    inorder(root->right, result, size);
+        return result;
+    }
+
+    public void preorder(TreeNode root, List<Integer> result) {
+
+        if(root == null) {
+            return;
+        }
+
+        result.add(root.val);
+        preorder(root.left, result);
+        preorder(root.right, result);
+    }
 }
 
-int* inorderTraversal(struct TreeNode* root, int* returnSize) {
-    int* result = (int*)malloc(100 * sizeof(int));
-    *returnSize = 0;
+-----------------------------------------------------------------------------------------
 
-    inorder(root, result, returnSize);
+2. Binary Tree Inorder Traversal(LeetCode 94)...
 
-    return result;
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Inorder(root, result);
+
+        return result;
+    }
+
+    public void Inorder(TreeNode root, List<Integer> result) {
+
+        if(root == null) {
+            return;
+        }
+
+        Inorder(root.left, result);
+        result.add(root.val);
+        Inorder(root.right, result);
+    }
 }
 
-----------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+
+3. Binary Tree Postorder Traversal(LeetCode 145)...
+
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        postorder(root, result);
+
+        return result;
+    }
+
+    public void postorder(TreeNode root, List<Integer> result) {
+
+        if(root == null) {
+            return;
+        }
+
+        postorder(root.left, result);
+        postorder(root.right, result);
+        result.add(root.val);
+    }
+}
+
+------------------------------------------------------------------------------------------
+
+4. Binary Tree Level Order Traversal(LeetCode 102)...
+
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        if(root == null) {
+            return result;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while(!queue.isEmpty()) {
+
+            int size = queue.size();
+
+            List<Integer> level = new ArrayList<>();
+
+            for(int i = 0; i < size; i++) {
+
+                TreeNode node = queue.poll();
+
+                level.add(node.val);
+
+                if(node.left != null) {
+                    queue.offer(node.left);
+                }
+
+                if(node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+
+            result.add(level);
+        }
+
+        return result;
+    }
+}
+
+------------------------------------------------------------------------------------------
